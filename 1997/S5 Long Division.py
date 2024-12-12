@@ -2,7 +2,7 @@
 # Yeah I know I'm not supposed to use Python, I'm supposed to use strings or whatever, I don't care
 
 
-def main():
+def main() -> None:
     """Process multiple test cases of division."""
     test_cases = int(input())
 
