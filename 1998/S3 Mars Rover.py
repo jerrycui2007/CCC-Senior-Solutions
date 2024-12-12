@@ -1,179 +1,128 @@
-# https://dmoj.ca/problem/ccc98s3
-test_cases = int(input())
 
+n = int(input())
 
-def ahead(steps):
-    return_commands.append(1)
-    return_commands.append(abs(steps))
-
-
-def right():
-    return_commands.append(2)
-
-
-def left():
-    return_commands.append(3)
-
-
-for _ in range(test_cases):
-    x = 0
-    y = 0
-
-    direction = 0
-    # 0 = up, 1 = right, 2 = down, 3 = left
-    # directions are assumed
+for _ in range(n):
+    startX, startY = 0, 0
+    roverX, roverY = 0, 0
+    direction = 0  # 0 is north, 90 is east, . . .
 
     while True:
-        command = int(input())
+        instruction = int(input())
 
-        if command == 0:
+        # End of excursion
+        if instruction == 0:
             break
 
-        elif command == 1:
+        # Move
+        if instruction == 1:
             distance = int(input())
 
             if direction == 0:
-                y += distance
-            elif direction == 1:
-                x += distance
-            elif direction == 2:
-                y -= distance
-            elif direction == 3:
-                x -= distance
+                roverY += distance
+            elif direction == 90:
+                roverX += distance
+            elif direction == 180:
+                roverY -= distance
+            else:
+                roverX -= distance
 
-        elif command == 2:
-            direction = (direction + 1) % 4
+        # Turn right
+        elif instruction == 2:
+            direction += 90
+            direction %= 360
 
-        elif command == 3:
-            direction = (direction - 1) % 4
+        # Turn left
+        else:
+            direction += 270
+            direction %= 360
 
-    distance = abs(x) + abs(y)
-    print(f"Distance is {distance}")
+    # Output distance
+    print(f"Distance is {abs(roverX) + abs(roverY)}")
 
-    return_commands = []
-    
-    if y > 0 and x > 0 and direction == 0:
-        right()
-        ahead(y)
-        right()
-        ahead(x)
-    elif y > 0 and x > 0 and direction == 1:
-        left()
-        ahead(x)
-        left()
-        ahead(y)
-    elif y > 0 and x > 0 and direction == 2:
-        ahead(x)
-        left()
-        ahead(y)
-    elif y > 0 and x > 0 and direction == 3:
-        ahead(y)
-        right()
-        ahead(x)
-    elif y > 0 > x and direction == 0:
-        ahead(x)
-        right()
-        ahead(y)
-    elif y > 0 > x and direction == 1:
-        right()
-        ahead(x)
-        right()
-        ahead(y)
-    elif y > 0 > x and direction == 2:
-        left()
-        ahead(y)
-        left()
-        ahead(x)
-    elif y > 0 > x and direction == 3:
-        ahead(y)
-        left()
-        ahead(x)
-    elif y < 0 and x < 0 and direction == 0:
-        ahead(x)
-        left()
-        ahead(y)
-    elif y < 0 and x < 0 and direction == 1:
-        ahead(y)
-        right()
-        ahead(x)
-    elif y < 0 and x < 0 and direction == 2:
-        right()
-        ahead(y)
-        right()
-        ahead(x)
-    elif y < 0 and x < 0 and direction == 3:
-        left()
-        ahead(x)
-        left()
-        ahead(y)
-    elif y < 0 < x and direction == 0:
-        left()
-        ahead(y)
-        left()
-        ahead(x)
-    elif y < 0 < x and direction == 1:
-        ahead(y)
-        left()
-        ahead(x)
-    elif y < 0 < x and direction == 2:
-        ahead(x)
-        right()
-        ahead(y)
-    elif y < 0 < x and direction == 3:
-        right()
-        ahead(x)
-        right()
-        ahead(y)
-    elif y == 0 and x > 0 and direction == 0:
-        right()
-        right()
-        ahead(x)
-    elif y == 0 and x > 0 and direction == 1:
-        left()
-        ahead(x)
-    elif y == 0 and x > 0 and direction == 2:
-        ahead(x)
-    elif y == 0 and x > 0 and direction == 3:
-        right()
-        ahead(x)
-    elif y > 0 and x == 0 and direction == 0:
-        right()
-        ahead(y)
-    elif y > 0 and x == 0 and direction == 1:
-        left()
-        left()
-        ahead(y)
-    elif y > 0 and x == 0 and direction == 2:
-        left()
-        ahead(y)
-    elif y > 0 and x == 0 and direction == 3:
-        ahead(y)
-    elif y == 0 and x < 0 and direction == 0:
-        ahead(x)
-    elif y == 0 and x < 0 and direction == 1:
-        right()
-        ahead(x)
-    elif y == 0 and x < 0 and direction == 2:
-        left()
-        left()
-        ahead(x)
-    elif y == 0 and x < 0 and direction == 3:
-        left()
-        ahead(x)
-    elif y < 0 and x == 0 and direction == 0:
-        left()
-        ahead(y)
-    elif y < 0 and x == 0 and direction == 1:
-        ahead(y)
-    elif y < 0 and x == 0 and direction == 2:
-        right()
-        ahead(y)
-    elif y > 0 and x == 0 and direction == 3:
-        left()
-        left()
-        ahead(y)
+    # Top Left Quadrant
+    if roverX < startX and roverY > startY:
+        if direction == 0:
+            print("2\n1\n" + str(startX - roverX) + "\n2\n1\n" + str(roverY))
+        elif direction == 90:
+            print("1\n" + str(startX - roverX) + "\n2\n1\n" + str(roverY))
+        elif direction == 180:
+            print("1\n" + str(roverY) + "\n3\n1\n" + str(startX - roverX))
+        else:
+            print("3\n1\n" + str(roverY) + "\n3\n1\n" + str(startX - roverX))
 
-    for command in return_commands:
-        print(command)
+    # Top Right Quadrant
+    if roverX > startX and roverY > startY:
+        if direction == 0:
+            print("3\n1\n" + str(roverX) + "\n3\n1\n" + str(roverY))
+        elif direction == 90:
+            print("2\n1\n" + str(roverY) + "\n2\n1\n" + str(roverX))
+        elif direction == 180:
+            print("1\n" + str(roverY) + "\n2\n1\n" + str(roverX))
+        else:
+            print("1\n" + str(roverX) + "\n3\n1\n" + str(roverY))
 
-    print()
+    # Bottom Right Quadrant
+    if roverX > startX and roverY < startY:
+        if direction == 0:
+            print("1\n" + str(startY - roverY) + "\n3\n1\n" + str(roverX))
+        elif direction == 90:
+            print("3\n1\n" + str(startY - roverY) + "\n3\n1\n" + str(roverX))
+        elif direction == 180:
+            print("2\n1\n" + str(roverX) + "\n2\n1\n" + str(startY - roverY))
+        else:
+            print("1\n" + str(roverX) + "\n2\n1\n" + str(startY - roverY))
+
+    # Bottom Left Quadrant
+    if roverX < startX and roverY < startY:
+        if direction == 0:
+            print("1\n" + str(startY - roverY) + "\n2\n1\n" + str(startX - roverX))
+        elif direction == 90:
+            print("1\n" + str(startX - roverX) + "\n3\n1\n" + str(startY - roverY))
+        elif direction == 180:
+            print("3\n1\n" + str(startX - roverX) + "\n3\n1\n" + str(startY - roverY))
+        else:
+            print("2\n1\n" + str(startY - roverY) + "\n2\n1\n" + str(startX - roverX))
+
+    # Positive Y Axis
+    if roverX == startX and roverY > startY:
+        if direction == 0:
+            print("2\n2\n1\n" + str(roverY))
+        elif direction == 90:
+            print("2\n1\n" + str(roverY))
+        elif direction == 180:
+            print("1\n" + str(roverY))
+        else:
+            print("3\n1\n" + str(roverY))
+
+    # Negative Y Axis
+    if roverX == startX and roverY < startY:
+        if direction == 0:
+            print("1\n" + str(startY - roverY))
+        elif direction == 90:
+            print("3\n1\n" + str(startY - roverY))
+        elif direction == 180:
+            print("2\n2\n1\n" + str(startY - roverY))
+        else:
+            print("2\n1\n" + str(startY - roverY))
+
+    # Positive X Axis
+    if roverX > startX and roverY == startY:
+        if direction == 0:
+            print("3\n1\n" + str(roverX))
+        elif direction == 90:
+            print("2\n2\n1\n" + str(roverX))
+        elif direction == 180:
+            print("2\n1\n" + str(roverX))
+        else:
+            print("1\n" + str(roverX))
+
+    # Negative X Axis
+    if roverX < startX and roverY == startY:
+        if direction == 0:
+            print("2\n1\n" + str(startX - roverX))
+        elif direction == 90:
+            print("1\n" + str(startX - roverX))
+        elif direction == 180:
+            print("3\n1\n" + str(startX - roverX))
+        else:
+            print("2\n2\n1\n" + str(startX - roverX))
