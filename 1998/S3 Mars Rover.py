@@ -1,10 +1,10 @@
-
+# https://dmoj.ca/problem/ccc98s3
 n = int(input())
 
 for _ in range(n):
     startX, startY = 0, 0
     roverX, roverY = 0, 0
-    direction = 0  # 0 is north, 90 is east, . . .
+    direction = 0  # 0 is north, 90 is east
 
     while True:
         instruction = int(input())
