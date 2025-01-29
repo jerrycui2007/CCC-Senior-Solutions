@@ -1,5 +1,5 @@
 # https://dmoj.ca/problem/ccc99s1
-# cards = [input() for _ in range(52)]
+cards = [input() for _ in range(52)]
 
 a_points = 0
 b_points = 0
