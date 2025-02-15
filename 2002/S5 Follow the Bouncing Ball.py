@@ -10,7 +10,6 @@ b = -slope * b_initial
 
 done = False
 
-# Start loop at i=1, matching C++ code
 for i in range(1, 999999):
     y = slope * (i * width) + b
     x = ((i * height) - b) / slope
